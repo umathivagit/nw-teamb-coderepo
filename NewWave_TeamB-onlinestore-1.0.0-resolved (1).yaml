@@ -1,0 +1,348 @@
+---
+swagger: "2.0"
+info:
+  description: "This is an API Which performs all the CRUD operations regarding the Online store \n"
+  version: 1.0.0
+  title: Online Store
+  contact:
+    email: meghass029@gmail.com
+  license:
+    name: C# (dot NET)
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: virtserver.swaggerhub.com
+basePath: /NewWave_TeamB/onlinestore/1.0.0
+tags:
+- name: Products
+  description: Every details regarding Products
+schemes:
+- https
+- http
+paths:
+  /Products:
+    get:
+      tags:
+      - Products
+      summary: Details of Products
+      description: Get Product Details
+      operationId: getProductDetails
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: productData
+        description: send a product data
+        required: false
+        schema:
+          $ref: '#/definitions/Products'
+      - name: productId
+        in: query
+        description: send a product Id
+        required: false
+        type: integer
+        format: int32
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Products'
+        "400":
+          description: Invalid status value
+        "401":
+          description: Unauthorized access
+    post:
+      tags:
+      - Products
+      summary: Adding the new Product
+      description: Adding a new Product
+      operationId: addProduct
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: productData
+        description: send a product data
+        required: false
+        schema:
+          $ref: '#/definitions/Products'
+      responses:
+        "201":
+          description: Successfully created
+        "400":
+          description: Invalid status value
+        "401":
+          description: Unauthorized access
+        "409":
+          description: Duplicate record
+    put:
+      tags:
+      - Products
+      summary: updating the new Product
+      description: updating a new Product
+      operationId: updateProduct
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: productData
+        description: send a product data
+        required: false
+        schema:
+          $ref: '#/definitions/Products'
+      - name: productId
+        in: query
+        description: send a product Id
+        required: false
+        type: integer
+        format: int32
+      responses:
+        "204":
+          description: Successfully updated
+        "400":
+          description: Invalid status value
+        "401":
+          description: Unauthorized access
+        "500":
+          description: Server error
+    delete:
+      tags:
+      - Products
+      summary: deleting the new Product
+      description: deleting a new Product
+      operationId: deleteProduct
+      produces:
+      - application/json
+      parameters:
+      - name: productId
+        in: query
+        description: send a product Id
+        required: false
+        type: integer
+        format: int32
+      responses:
+        "204":
+          description: Successfully deleted
+        "400":
+          description: Invalid status value
+        "401":
+          description: Unauthorized access
+        "500":
+          description: Server error
+  /ProductList:
+    get:
+      tags:
+      - ProductList
+      summary: Collection of the Products
+      description: Get all the Product list
+      operationId: getProductList
+      produces:
+      - application/json
+      parameters:
+      - name: limit
+        in: query
+        description: maximum number of records to return
+        required: false
+        type: integer
+        maximum: 500
+        minimum: 0
+        format: int32
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductList'
+        "400":
+          description: Invalid status value
+        "401":
+          description: Unauthorized access
+  /Cart:
+    get:
+      tags:
+      - Cart
+      summary: Details of Cart
+      description: Get Cart Details
+      operationId: getCartDetails
+      produces:
+      - application/json
+      parameters:
+      - name: limit
+        in: query
+        description: maximum number of records to return
+        required: false
+        type: integer
+        maximum: 500
+        minimum: 0
+        format: int32
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Cart'
+        "400":
+          description: Invalid status value
+        "401":
+          description: Unauthorized access
+    post:
+      tags:
+      - Cart
+      summary: Adding a Product to cart
+      description: Adding a Product to cart
+      operationId: addProductToCart
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: productData
+        description: send a product data
+        required: false
+        schema:
+          $ref: '#/definitions/Cart'
+      responses:
+        "201":
+          description: Successfully created
+        "400":
+          description: Invalid status value
+        "401":
+          description: Unauthorized access
+        "409":
+          description: Duplicate record
+    put:
+      tags:
+      - Cart
+      summary: updating the product from cart
+      description: updating cart information
+      operationId: updateCart
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: cartData
+        description: send a product data
+        required: false
+        schema:
+          $ref: '#/definitions/Cart'
+      - name: productId
+        in: query
+        description: Update quantity in cart
+        required: false
+        type: integer
+        format: int32
+      responses:
+        "204":
+          description: Successfully updated
+        "400":
+          description: Invalid status value
+        "401":
+          description: Unauthorized access
+        "500":
+          description: Server error
+    delete:
+      tags:
+      - Cart
+      summary: deleting the cart Product
+      description: deleting a cart Product
+      operationId: deleteCartProduct
+      produces:
+      - application/json
+      parameters:
+      - name: productId
+        in: query
+        description: send a product Id
+        required: false
+        type: integer
+        format: int32
+      responses:
+        "204":
+          description: Successfully deleted
+        "400":
+          description: Invalid status value
+        "401":
+          description: Unauthorized access
+        "500":
+          description: Server error
+definitions:
+  Products:
+    type: object
+    required:
+    - price
+    - productDescription
+    - productId
+    - productName
+    - sellerContact
+    - sellerName
+    properties:
+      productId:
+        type: integer
+        format: int32
+        example: 101
+      productName:
+        type: string
+        example: Vivo mobile
+      price:
+        type: integer
+        format: int32
+        example: 20000
+      productDescription:
+        type: string
+        example: Android Phone
+      sellerName:
+        type: string
+        example: Sangeetha mobiles
+      sellerContact:
+        type: string
+        example: "987458963"
+  Cart:
+    type: object
+    required:
+    - customerId
+    - productId
+    - quantity
+    - shoppingId
+    properties:
+      productId:
+        type: integer
+        format: int32
+        example: 101
+      customerId:
+        type: integer
+        format: int32
+        example: 1001
+      shoppingId:
+        type: integer
+        format: int32
+        example: 1
+      quantity:
+        type: integer
+        format: int32
+        example: 2
+  ProductList:
+    type: object
+    required:
+    - price
+    - productId
+    - productName
+    properties:
+      productId:
+        type: integer
+        format: int32
+        example: 101
+      productName:
+        type: string
+        example: Vivo mobile
+      price:
+        type: integer
+        format: int32
+        example: 20000
